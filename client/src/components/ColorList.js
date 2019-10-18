@@ -7,7 +7,7 @@ const initialColor = {
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColor, getData }) => {
+const ColorList = ({ colors, updateColors, getData }) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
@@ -18,15 +18,26 @@ const ColorList = ({ colors, updateColor, getData }) => {
   };
 
   const saveEdit = e => {
-    e.preventDefault();
+    e.preventDefault()
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
     
     axiosWithAuth ()
       .put(`http://localhost:5000/api/colors/${colorToEdit}`, colorToEdit)
-      .then(response => console.log(response))
-  };
+
+       .then(res => {
+          // needs to call setItems
+          updateColors(colors.map(color =>{
+            if (color.id ===res.data.id) {
+              return res.data
+            }else{
+              return color;
+            }
+          }))
+          
+        })
+      }
 
   const deleteColor = colors => {
     // make a delete request to delete this color
