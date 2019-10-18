@@ -26,7 +26,7 @@ useEffect(() => {
 
   return (
     <>
-      <ColorList colors={colorList} updateColors={setColorList} />
+      <ColorList colors={colorList} updateColors={setColorList} getData={getData} />
       <Bubbles colors={colorList} />
     </>
   );
